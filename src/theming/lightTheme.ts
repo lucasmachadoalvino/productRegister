@@ -3,6 +3,7 @@ export const lightTheme = {
 		background: '#ffffff',
 		text: '#505050',
 		border: '#D9D9D9',
+		button: '#292D32',
 	},
 	space: {
 		small: 8,

@@ -30,11 +30,10 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 	const scheme = useColorScheme();
 
 	useEffect(() => {
-		console.log('🚀 ~ useEffect ~ loadTheme');
 		loadTheme();
 	}, []);
 
-	async function loadTheme() {
+	const loadTheme = async () => {
 		const savedTheme = (await AsyncStorage.getItem('@theme')) as ThemeType;
 
 		if (savedTheme) {
@@ -44,9 +43,9 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 		} else {
 			setTheme(ThemeType.light);
 		}
-	}
+	};
 
-	function toggleTheme() {
+	const toggleTheme = () => {
 		let newTheme;
 		if (theme === ThemeType.light) {
 			newTheme = ThemeType.dark;
@@ -56,7 +55,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 
 		AsyncStorage.setItem('@theme', newTheme);
 		setTheme(newTheme);
-	}
+	};
 
 	return (
 		<ThemeContext.Provider value={{ theme, toggleTheme }}>

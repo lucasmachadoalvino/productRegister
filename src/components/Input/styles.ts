@@ -1,10 +1,7 @@
 import styled from 'styled-components/native';
 import { RnInputProps } from './interfaces';
 
-export const Container = styled.View`
-	/* align-self: ; */
-	/* align-self:; */
-`;
+export const Container = styled.View``;
 
 export const RnInput = styled.TextInput<RnInputProps>`
 	border: solid 2px ${({ theme }) => theme.colors.border};
@@ -14,4 +11,5 @@ export const RnInput = styled.TextInput<RnInputProps>`
 	font-weight: ${({ theme }) => theme.fontWeight.medium};
 	margin-bottom: ${({ theme, marginBottom }) => (marginBottom ? theme.space[marginBottom] : 0)}px;
 	margin-top: ${({ theme, marginTop }) => (marginTop ? theme.space[marginTop] : 0)}px;
+	color: ${({ theme }) => theme.colors.text};
 `;

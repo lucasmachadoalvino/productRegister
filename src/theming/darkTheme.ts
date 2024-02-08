@@ -3,6 +3,7 @@ export const darkTheme = {
 		background: '#121212',
 		text: '#ffffff',
 		border: '#D9D9D9',
+		button: '#6FA9B7',
 	},
 	space: {
 		small: 8,

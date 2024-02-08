@@ -1,37 +1,31 @@
+import { useNavigation } from '@react-navigation/native';
 import { debounce } from 'lodash';
 import { useCallback, useState } from 'react';
-
-import { Input } from '../../components/Input';
-
-import { useNavigation } from '@react-navigation/native';
+import { Alert } from 'react-native';
 import { Button } from '../../components/Button';
+import { Input } from '../../components/Input';
 import { Text } from '../../components/Text';
 import { useUser } from '../../contexts/UserContext';
+import { StackParamList } from '../../routes';
 import { useAlert } from '../../utils/useAlerts';
 import { useFormat } from '../../utils/useFormat';
 import { useValidade } from '../../utils/useValidade';
 import { Container, Content, InputContent } from './styles';
 
-export const SignInScreen = () => {
+export const RegisterScreen = () => {
 	const [cpf, setCpf] = useState('');
 	const [cpfError, setCpfError] = useState('');
 
 	const [password, setPassword] = useState('');
 	const [passwordError, setPasswordError] = useState('');
 
-	const { validateCpf, validadePassword } = useValidade();
 	const { formatCpf } = useFormat();
+	const { validateCpf, validadePassword } = useValidade();
+	const { cpfEmptyAlert, cpfInvalidAlert, passwordEmptyAlert, passwordInvalidAlert } = useAlert();
 
-	const {
-		cpfEmptyAlert,
-		cpfInvalidAlert,
-		passwordEmptyAlert,
-		passwordInvalidAlert,
-		loginInvalidAlert,
-	} = useAlert();
+	const navigation = useNavigation<StackParamList>();
 
-	const { validadeLogin } = useUser();
-	const navigation = useNavigation();
+	const { registerUser } = useUser();
 
 	const handleValidateCpf = (newValue: string) => {
 		const isValid = validateCpf(newValue);
@@ -42,6 +36,16 @@ export const SignInScreen = () => {
 		}
 	};
 
+	const handleUpdateCpf = (newValue: string) => {
+		const formattedCpf = formatCpf(newValue);
+		setCpf(formattedCpf);
+	};
+
+	const debouncedValidadeCpf = useCallback(
+		debounce((nextValue) => handleValidateCpf(nextValue), 1000),
+		[]
+	);
+
 	const handleValidatePassword = (newValue: string) => {
 		const isValid = validadePassword(newValue);
 		if (!isValid) {
@@ -51,22 +55,12 @@ export const SignInScreen = () => {
 		}
 	};
 
-	const debouncedValidadeCpf = useCallback(
-		debounce((nextValue) => handleValidateCpf(nextValue), 1000),
-		[]
-	);
-
 	const debouncedValidadePassword = useCallback(
 		debounce((nextValue) => handleValidatePassword(nextValue), 1000),
 		[]
 	);
 
-	const handleUpdateCpf = (newValue: string) => {
-		const formattedCpf = formatCpf(newValue);
-		setCpf(formattedCpf);
-	};
-
-	const handleOnPressLogin = useCallback(() => {
+	const handleOnPressRegister = () => {
 		if (!cpf) {
 			return cpfEmptyAlert();
 		}
@@ -83,14 +77,16 @@ export const SignInScreen = () => {
 			return passwordInvalidAlert();
 		}
 
-		const isValidLogin = validadeLogin(cpf, password);
+		registerUser(cpf, password);
 
-		if (!isValidLogin) {
-			return loginInvalidAlert();
-		}
-
-		return navigation.navigate('Home');
-	}, [cpf, password, validateCpf, validadePassword]);
+		Alert.alert('Conta cadastrada', 'Sua conta foi cadastrada com sucesso', [
+			{
+				text: 'Continuar',
+				onPress: () => navigation.navigate('Home'),
+				style: 'cancel',
+			},
+		]);
+	};
 
 	return (
 		<Container>
@@ -98,8 +94,8 @@ export const SignInScreen = () => {
 				<Text fontSize="extraLarge" fontWeight="bold" marginBottom="small">
 					Bem-vindo!
 				</Text>
-				<Text fontSize="extraLarge" fontWeight="semiBold">
-					Faça login na sua conta
+				<Text fontSize="large" fontWeight="semiBold">
+					Realize seu cadastro
 				</Text>
 			</Content>
 
@@ -132,7 +128,7 @@ export const SignInScreen = () => {
 					marginBottom="extraLarge"
 				/>
 
-				<Button title="Entrar" onPress={handleOnPressLogin} />
+				<Button title="Registrar" onPress={handleOnPressRegister} />
 			</InputContent>
 		</Container>
 	);

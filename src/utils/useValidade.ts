@@ -1,7 +1,5 @@
 export const useValidade = () => {
-	function validateCpf(cpf: string) {
-		if (typeof cpf !== 'string') return false;
-
+	const validateCpf = (cpf: string) => {
 		const cpfNumbersOnly = cpf.replace(/[^\d]+/g, '');
 		if (cpfNumbersOnly.length !== 11 || !!cpfNumbersOnly.match(/(\d)\1{10}/)) return false;
 
@@ -14,7 +12,11 @@ export const useValidade = () => {
 			10;
 
 		return rest(10) === cpfArray[9] && rest(11) === cpfArray[10];
-	}
+	};
 
-	return { validateCpf };
+	const validadePassword = (password: string) => {
+		return password.length >= 8;
+	};
+
+	return { validateCpf, validadePassword };
 };
