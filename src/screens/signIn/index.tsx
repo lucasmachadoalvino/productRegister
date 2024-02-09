@@ -6,11 +6,15 @@ import { Input } from '../../components/Input';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from '../../components/Button';
 import { Text } from '../../components/Text';
+
 import { useUser } from '../../contexts/UserContext';
 import { useAlert } from '../../utils/useAlerts';
 import { useFormat } from '../../utils/useFormat';
 import { useValidade } from '../../utils/useValidade';
 import { Container, Content, InputContent } from './styles';
+
+import EyeClose from '../../assets/eye-close.svg';
+import EyeOpen from '../../assets/eye-open.svg';
 
 export const SignInScreen = () => {
 	const [cpf, setCpf] = useState('');
@@ -18,6 +22,8 @@ export const SignInScreen = () => {
 
 	const [password, setPassword] = useState('');
 	const [passwordError, setPasswordError] = useState('');
+
+	const [showPassword, setShowPassword] = useState(false);
 
 	const { validateCpf, validadePassword } = useValidade();
 	const { formatCpf } = useFormat();
@@ -88,8 +94,10 @@ export const SignInScreen = () => {
 		if (!isValidLogin) {
 			return loginInvalidAlert();
 		}
-
-		return navigation.navigate('Home');
+		navigation.reset({
+			index: 0,
+			routes: [{ name: 'Home' }],
+		});
 	}, [cpf, password, validateCpf, validadePassword]);
 
 	return (
@@ -122,7 +130,7 @@ export const SignInScreen = () => {
 					title="Senha"
 					placeholder="Digite sua senha"
 					value={password}
-					secureTextEntry
+					secureTextEntry={!showPassword}
 					keyboardType="visible-password"
 					errorMessage={passwordError}
 					onChangeText={(value) => {
@@ -130,6 +138,10 @@ export const SignInScreen = () => {
 						debouncedValidadePassword(value);
 					}}
 					marginBottom="extraLarge"
+					rightIcon={
+						!showPassword ? <EyeClose width={24} height={24} /> : <EyeOpen width={24} height={24} />
+					}
+					rightIconOnPress={() => setShowPassword(!showPassword)}
 				/>
 
 				<Button title="Entrar" onPress={handleOnPressLogin} />

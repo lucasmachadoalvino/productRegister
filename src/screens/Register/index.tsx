@@ -12,12 +12,17 @@ import { useFormat } from '../../utils/useFormat';
 import { useValidade } from '../../utils/useValidade';
 import { Container, Content, InputContent } from './styles';
 
+import EyeClose from '../../assets/eye-close.svg';
+import EyeOpen from '../../assets/eye-open.svg';
+
 export const RegisterScreen = () => {
 	const [cpf, setCpf] = useState('');
 	const [cpfError, setCpfError] = useState('');
 
 	const [password, setPassword] = useState('');
 	const [passwordError, setPasswordError] = useState('');
+
+	const [showPassword, setShowPassword] = useState(false);
 
 	const { formatCpf } = useFormat();
 	const { validateCpf, validadePassword } = useValidade();
@@ -82,7 +87,11 @@ export const RegisterScreen = () => {
 		Alert.alert('Conta cadastrada', 'Sua conta foi cadastrada com sucesso', [
 			{
 				text: 'Continuar',
-				onPress: () => navigation.navigate('Home'),
+				onPress: () =>
+					navigation.reset({
+						index: 0,
+						routes: [{ name: 'Home' }],
+					}),
 				style: 'cancel',
 			},
 		]);
@@ -118,7 +127,7 @@ export const RegisterScreen = () => {
 					title="Senha"
 					placeholder="Digite sua senha"
 					value={password}
-					secureTextEntry
+					secureTextEntry={!showPassword}
 					keyboardType="visible-password"
 					errorMessage={passwordError}
 					onChangeText={(value) => {
@@ -126,6 +135,10 @@ export const RegisterScreen = () => {
 						debouncedValidadePassword(value);
 					}}
 					marginBottom="extraLarge"
+					rightIcon={
+						!showPassword ? <EyeClose width={24} height={24} /> : <EyeOpen width={24} height={24} />
+					}
+					rightIconOnPress={() => setShowPassword(!showPassword)}
 				/>
 
 				<Button title="Registrar" onPress={handleOnPressRegister} />
