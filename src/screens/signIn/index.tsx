@@ -13,6 +13,7 @@ import { useFormat } from '../../utils/useFormat';
 import { useValidade } from '../../utils/useValidade';
 import { Container, Content, InputContent } from './styles';
 
+import { useTheme } from 'styled-components';
 import EyeClose from '../../assets/eye-close.svg';
 import EyeOpen from '../../assets/eye-open.svg';
 
@@ -27,6 +28,8 @@ export const SignInScreen = () => {
 
 	const { validateCpf, validadePassword } = useValidade();
 	const { formatCpf } = useFormat();
+
+	const theme = useTheme();
 
 	const {
 		cpfEmptyAlert,
@@ -139,7 +142,16 @@ export const SignInScreen = () => {
 					}}
 					marginBottom="extraLarge"
 					rightIcon={
-						!showPassword ? <EyeClose width={24} height={24} /> : <EyeOpen width={24} height={24} />
+						!showPassword ? (
+							<EyeClose
+								width={24}
+								height={24}
+								stroke={theme.colors.text}
+								fill={theme.colors.text}
+							/>
+						) : (
+							<EyeOpen width={24} height={24} stroke={theme.colors.text} fill={theme.colors.text} />
+						)
 					}
 					rightIconOnPress={() => setShowPassword(!showPassword)}
 				/>

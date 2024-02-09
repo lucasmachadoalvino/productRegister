@@ -22,7 +22,7 @@ export const Input = ({
 				</Text>
 			)}
 			<Content>
-				<RnInput placeholderTextColor={theme.colors.border} {...rest} />
+				<RnInput placeholderTextColor={theme.colors.text} {...rest} />
 				{rightIcon && <IconContent onPress={rightIconOnPress}>{rightIcon}</IconContent>}
 			</Content>
 

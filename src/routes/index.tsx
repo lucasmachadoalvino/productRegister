@@ -24,7 +24,7 @@ export function Routes() {
 	if (isLoadingUser) {
 		return (
 			<Container>
-				<ActivityIndicator color={theme.colors.button} />
+				<ActivityIndicator color={theme.colors.text} />
 			</Container>
 		);
 	}
