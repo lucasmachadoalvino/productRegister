@@ -4,6 +4,9 @@ export const lightTheme = {
 		text: '#505050',
 		border: '#D9D9D9',
 		button: '#292D32',
+		tableHeader: '#F5F5F5',
+		toggle: '#767577',
+		toggleActive: '#81b0ff',
 	},
 	space: {
 		small: 8,

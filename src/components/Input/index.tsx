@@ -23,7 +23,14 @@ export const Input = ({
 			)}
 			<Content>
 				<RnInput placeholderTextColor={theme.colors.text} {...rest} />
-				{rightIcon && <IconContent onPress={rightIconOnPress}>{rightIcon}</IconContent>}
+				{rightIcon && (
+					<IconContent
+						onPress={rightIconOnPress}
+						hitSlop={{ bottom: 20, left: 20, right: 20, top: 20 }}
+					>
+						{rightIcon}
+					</IconContent>
+				)}
 			</Content>
 
 			{errorMessage && (

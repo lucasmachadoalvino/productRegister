@@ -1,24 +1,34 @@
-import { Row } from 'react-native-table-component';
 import styled from 'styled-components/native';
 import { Text } from '../Text';
 
 export const Container = styled.View``;
 
-export const TableRow = styled(Row).attrs({
-	textStyle: {
-		color: 'red',
-	},
-})`
+export const Header = styled.View`
+	flex-direction: row;
 	background-color: ${({ theme }) => theme.colors.button};
-	width: 500px;
 `;
 
-export const HeadTitle = styled(Text).attrs({
-	fontSize: 'default',
-	fontWeight: 'semiBold',
-})`
-	color: ${({ theme }) => theme.colors.background};
-	border: ${({ theme }) => theme.colors.background};
+export const HeaderText = styled(Text)`
+	color: ${({ theme }) => theme.colors.tableHeader};
+`;
+
+export const DataRow = styled.TouchableOpacity`
+	flex-direction: row;
+`;
+
+const DefaultCell = styled.View`
 	padding: ${({ theme }) => theme.space.default}px;
-	text-align: center;
+	border: solid 1px ${({ theme }) => theme.colors.text};
+`;
+
+export const IdCell = styled(DefaultCell)`
+	width: 50px;
+`;
+
+export const NameCell = styled(DefaultCell)`
+	width: 300px;
+`;
+
+export const QuantityCell = styled(DefaultCell)`
+	width: 100px;
 `;

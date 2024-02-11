@@ -8,6 +8,7 @@ export interface InputProps extends TextInputProps {
 	marginBottom?: Space;
 	rightIcon?: React.ReactNode;
 	rightIconOnPress?: () => void;
+	prefix?: string;
 }
 
 export interface RnInputProps {

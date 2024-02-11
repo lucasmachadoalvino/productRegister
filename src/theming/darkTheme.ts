@@ -4,6 +4,9 @@ export const darkTheme = {
 		text: '#E1E1E6',
 		border: '#D9D9D9',
 		button: '#6FA9B7',
+		tableHeader: '#F5F5F5',
+		toggle: '#767577',
+		toggleActive: '#81b0ff',
 	},
 	space: {
 		small: 8,

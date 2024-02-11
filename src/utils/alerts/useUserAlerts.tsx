@@ -1,6 +1,6 @@
 import { Alert } from 'react-native';
 
-export const useAlert = () => {
+export const useUserAlert = () => {
 	const cpfEmptyAlert = () => {
 		return Alert.alert('Atenção', 'CPF não informado', [
 			{

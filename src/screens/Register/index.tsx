@@ -7,13 +7,13 @@ import { Input } from '../../components/Input';
 import { Text } from '../../components/Text';
 import { useUser } from '../../contexts/UserContext';
 import { StackParamList } from '../../routes';
-import { useAlert } from '../../utils/useAlerts';
 import { useFormat } from '../../utils/useFormat';
 import { useValidade } from '../../utils/useValidade';
 import { Container, Content, InputContent } from './styles';
 
 import EyeClose from '../../assets/eye-close.svg';
 import EyeOpen from '../../assets/eye-open.svg';
+import { useUserAlert } from '../../utils/alerts/useUserAlerts';
 
 export const RegisterScreen = () => {
 	const [cpf, setCpf] = useState('');
@@ -26,7 +26,8 @@ export const RegisterScreen = () => {
 
 	const { formatCpf } = useFormat();
 	const { validateCpf, validadePassword } = useValidade();
-	const { cpfEmptyAlert, cpfInvalidAlert, passwordEmptyAlert, passwordInvalidAlert } = useAlert();
+	const { cpfEmptyAlert, cpfInvalidAlert, passwordEmptyAlert, passwordInvalidAlert } =
+		useUserAlert();
 
 	const navigation = useNavigation<StackParamList>();
 
@@ -46,7 +47,7 @@ export const RegisterScreen = () => {
 		setCpf(formattedCpf);
 	};
 
-	const debouncedValidadeCpf = useCallback(
+	const debounceValidadeCpf = useCallback(
 		debounce((nextValue) => handleValidateCpf(nextValue), 1000),
 		[]
 	);
@@ -60,7 +61,7 @@ export const RegisterScreen = () => {
 		}
 	};
 
-	const debouncedValidadePassword = useCallback(
+	const debounceValidadePassword = useCallback(
 		debounce((nextValue) => handleValidatePassword(nextValue), 1000),
 		[]
 	);
@@ -90,7 +91,7 @@ export const RegisterScreen = () => {
 				onPress: () =>
 					navigation.reset({
 						index: 0,
-						routes: [{ name: 'Home' }],
+						routes: [{ name: 'SignIn' }],
 					}),
 				style: 'cancel',
 			},
@@ -114,12 +115,12 @@ export const RegisterScreen = () => {
 					errorMessage={cpfError}
 					placeholder="Digite seu cpf"
 					marginBottom="default"
-					keyboardType="numbers-and-punctuation"
+					keyboardType="numeric"
 					value={cpf}
 					maxLength={14}
 					onChangeText={(value) => {
 						handleUpdateCpf(value);
-						debouncedValidadeCpf(value);
+						debounceValidadeCpf(value);
 					}}
 				/>
 
@@ -132,7 +133,7 @@ export const RegisterScreen = () => {
 					errorMessage={passwordError}
 					onChangeText={(value) => {
 						setPassword(value);
-						debouncedValidadePassword(value);
+						debounceValidadePassword(value);
 					}}
 					marginBottom="extraLarge"
 					rightIcon={

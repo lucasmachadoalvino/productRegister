@@ -7,6 +7,8 @@ export interface CustomTextProps {
 	fontWeight?: FontWeights;
 	marginTop?: Space;
 	marginBottom?: Space;
+	marginLeft?: Space;
+	marginRight?: Space;
 }
 
 export interface RnTextProps {
@@ -14,4 +16,6 @@ export interface RnTextProps {
 	fontWeight: FontWeights;
 	marginTop?: Space;
 	marginBottom?: Space;
+	marginLeft?: Space;
+	marginRight?: Space;
 }

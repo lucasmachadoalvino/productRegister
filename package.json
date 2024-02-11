@@ -3,17 +3,19 @@
 	"version": "1.0.0",
 	"main": "index.js",
 	"scripts": {
-		"start": "expo start --dev-client",
+		"start": "expo start",
 		"android": "expo run:android",
 		"ios": "expo run:ios",
 		"web": "expo start --web",
 		"ts:check": "tsc",
-		"lint": "eslint ."
+		"lint": "eslint .",
+		"test": "jest"
 	},
 	"dependencies": {
 		"@react-native-async-storage/async-storage": "^1.21.0",
 		"@react-navigation/native": "^6.1.9",
 		"@react-navigation/native-stack": "^6.9.17",
+		"@reduxjs/toolkit": "^2.1.0",
 		"@types/react": "~18.2.45",
 		"expo": "~50.0.6",
 		"expo-status-bar": "~1.11.1",
@@ -23,15 +25,16 @@
 		"react-native-safe-area-context": "^4.9.0",
 		"react-native-screens": "^3.29.0",
 		"react-native-svg": "14.1.0",
-		"react-native-table-component": "^1.2.2",
+		"react-redux": "^9.1.0",
+		"redux-persist": "^6.0.0",
 		"styled-components": "^6.1.8",
 		"typescript": "*"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.20.0",
+		"@testing-library/react-native": "^12.4.3",
 		"@tsconfig/react-native": "^3.0.3",
 		"@types/lodash": "^4.14.202",
-		"@types/react-native-table-component": "^1.2.8",
 		"@typescript-eslint/eslint-plugin": "^6.21.0",
 		"@typescript-eslint/parser": "^6.21.0",
 		"eslint": "^8.56.0",

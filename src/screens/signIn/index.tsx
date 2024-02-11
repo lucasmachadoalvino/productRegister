@@ -8,7 +8,6 @@ import { Button } from '../../components/Button';
 import { Text } from '../../components/Text';
 
 import { useUser } from '../../contexts/UserContext';
-import { useAlert } from '../../utils/useAlerts';
 import { useFormat } from '../../utils/useFormat';
 import { useValidade } from '../../utils/useValidade';
 import { Container, Content, InputContent } from './styles';
@@ -16,6 +15,9 @@ import { Container, Content, InputContent } from './styles';
 import { useTheme } from 'styled-components';
 import EyeClose from '../../assets/eye-close.svg';
 import EyeOpen from '../../assets/eye-open.svg';
+
+import { KeyboardAvoidingView, Platform } from 'react-native';
+import { useUserAlert } from '../../utils/alerts/useUserAlerts';
 
 export const SignInScreen = () => {
 	const [cpf, setCpf] = useState('');
@@ -37,7 +39,7 @@ export const SignInScreen = () => {
 		passwordEmptyAlert,
 		passwordInvalidAlert,
 		loginInvalidAlert,
-	} = useAlert();
+	} = useUserAlert();
 
 	const { validadeLogin } = useUser();
 	const navigation = useNavigation();
@@ -60,12 +62,12 @@ export const SignInScreen = () => {
 		}
 	};
 
-	const debouncedValidadeCpf = useCallback(
+	const debounceValidadeCpf = useCallback(
 		debounce((nextValue) => handleValidateCpf(nextValue), 1000),
 		[]
 	);
 
-	const debouncedValidadePassword = useCallback(
+	const debounceValidadePassword = useCallback(
 		debounce((nextValue) => handleValidatePassword(nextValue), 1000),
 		[]
 	);
@@ -105,59 +107,66 @@ export const SignInScreen = () => {
 
 	return (
 		<Container>
-			<Content>
-				<Text fontSize="extraLarge" fontWeight="bold" marginBottom="small">
-					Bem-vindo!
-				</Text>
-				<Text fontSize="extraLarge" fontWeight="semiBold">
-					Faça login na sua conta
-				</Text>
-			</Content>
+			<KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+				<Content>
+					<Text fontSize="extraLarge" fontWeight="bold" marginBottom="small">
+						Bem-vindo!
+					</Text>
+					<Text fontSize="extraLarge" fontWeight="semiBold">
+						Faça login na sua conta
+					</Text>
+				</Content>
 
-			<InputContent>
-				<Input
-					title="CPF"
-					errorMessage={cpfError}
-					placeholder="Digite seu cpf"
-					marginBottom="default"
-					keyboardType="numbers-and-punctuation"
-					value={cpf}
-					maxLength={14}
-					onChangeText={(value) => {
-						handleUpdateCpf(value);
-						debouncedValidadeCpf(value);
-					}}
-				/>
+				<InputContent>
+					<Input
+						title="CPF"
+						errorMessage={cpfError}
+						placeholder="Digite seu cpf"
+						marginBottom="default"
+						keyboardType="numbers-and-punctuation"
+						value={cpf}
+						maxLength={14}
+						onChangeText={(value) => {
+							handleUpdateCpf(value);
+							debounceValidadeCpf(value);
+						}}
+					/>
 
-				<Input
-					title="Senha"
-					placeholder="Digite sua senha"
-					value={password}
-					secureTextEntry={!showPassword}
-					keyboardType="visible-password"
-					errorMessage={passwordError}
-					onChangeText={(value) => {
-						setPassword(value);
-						debouncedValidadePassword(value);
-					}}
-					marginBottom="extraLarge"
-					rightIcon={
-						!showPassword ? (
-							<EyeClose
-								width={24}
-								height={24}
-								stroke={theme.colors.text}
-								fill={theme.colors.text}
-							/>
-						) : (
-							<EyeOpen width={24} height={24} stroke={theme.colors.text} fill={theme.colors.text} />
-						)
-					}
-					rightIconOnPress={() => setShowPassword(!showPassword)}
-				/>
+					<Input
+						title="Senha"
+						placeholder="Digite sua senha"
+						value={password}
+						secureTextEntry={!showPassword}
+						keyboardType="visible-password"
+						errorMessage={passwordError}
+						onChangeText={(value) => {
+							setPassword(value);
+							debounceValidadePassword(value);
+						}}
+						marginBottom="extraLarge"
+						rightIcon={
+							!showPassword ? (
+								<EyeClose
+									width={24}
+									height={24}
+									stroke={theme.colors.text}
+									fill={theme.colors.text}
+								/>
+							) : (
+								<EyeOpen
+									width={24}
+									height={24}
+									stroke={theme.colors.text}
+									fill={theme.colors.text}
+								/>
+							)
+						}
+						rightIconOnPress={() => setShowPassword(!showPassword)}
+					/>
 
-				<Button title="Entrar" onPress={handleOnPressLogin} />
-			</InputContent>
+					<Button title="Entrar" onPress={handleOnPressLogin} />
+				</InputContent>
+			</KeyboardAvoidingView>
 		</Container>
 	);
 };

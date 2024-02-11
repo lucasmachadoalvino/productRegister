@@ -7,7 +7,6 @@ export const Container = styled.View<RnInputProps>`
 `;
 
 export const RnInput = styled.TextInput`
-	padding: ${({ theme }) => theme.space.default}px;
 	font-size: ${({ theme }) => theme.fontSize.default}px;
 	font-weight: ${({ theme }) => theme.fontWeight.medium};
 	color: ${({ theme }) => theme.colors.text};
@@ -15,6 +14,7 @@ export const RnInput = styled.TextInput`
 `;
 
 export const Content = styled.View`
+	padding: ${({ theme }) => theme.space.default}px;
 	border: solid 2px ${({ theme }) => theme.colors.border};
 	flex-direction: row;
 	align-items: center;
@@ -22,5 +22,5 @@ export const Content = styled.View`
 `;
 
 export const IconContent = styled.TouchableOpacity`
-	margin-right: ${({ theme }) => theme.space.default}px;
+	margin-left: ${({ theme }) => theme.space.default}px;
 `;

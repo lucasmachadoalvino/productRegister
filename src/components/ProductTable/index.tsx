@@ -1,69 +1,67 @@
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { Cell, Table, TableWrapper } from 'react-native-table-component';
-import { Container, HeadTitle, TableRow } from './styles';
+import React from 'react';
+import { ScrollView } from 'react-native';
+// import { addProduct } from '../../store/features/products/produtSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { Text } from '../Text';
+import { ProductTableProps } from './interfaces';
+import { Container, DataRow, Header, HeaderText, IdCell, NameCell, QuantityCell } from './styles';
 
-export const ProductTable = () => {
-	const element = (index) => (
-		<TouchableOpacity onPress={() => alertIndex(index)}>
-			<Text>{index}</Text>
-		</TouchableOpacity>
-	);
+export const ProductTable = ({ onProductPress }: ProductTableProps) => {
+	const dispatch = useAppDispatch();
+	const products = useAppSelector((state) => state.product.list);
+	const filteredProducts = useAppSelector((state) => state.product.filteredProducts);
 
-	const Head = (title: string) => {
-		return (
-			<TouchableOpacity onPress={() => alertIndex(index)}>
-				{/* <View style={styles.head}> */}
-				<HeadTitle>{title}</HeadTitle>
-				{/* </View> */}
-			</TouchableOpacity>
-		);
-	};
-
-	const state = {
-		tableHead: [Head('Id'), Head('Nome'), Head('Estoque'), Head('Valor'), Head('Total')],
-		tableData: [
-			['1', '2', '3', '4', '5'],
-			['1', '2', '3', '4', '5'],
-			['1', '2', '3', '4', '5'],
-			['1', '2', '3', '4', '5'],
-			['1', '2', '3', '4', '5'],
-			['1', '2', '3', '4', '5'],
-			['1', '2', '3', '4', '5'],
-			['1', '2', '3', '4', '5'],
-			['1', '2', '3', '4', '5'],
-			['1', '2', '3', '4', '5'],
-			['1', '2', '3', '4', '5'],
-			['1', '2', '3', '4', '5'],
-		],
-	};
-
-	const alertIndex = (index) => {
-		Alert.alert(`This is row ${index + 1}`);
-	};
+	const data = filteredProducts.length > 0 ? filteredProducts : products;
 
 	return (
-		<ScrollView horizontal>
+		<ScrollView horizontal showsHorizontalScrollIndicator={false}>
 			<Container>
-				<Table>
-					<TableRow data={state.tableHead} textStyle={styles.text} />
-					{state.tableData.map((rowData, index) => (
-						<TableWrapper key={index} style={styles.row}>
-							{rowData.map((cellData, cellIndex) => (
-								<Cell key={cellIndex} data={element(cellData, index)} textStyle={styles.text} />
-							))}
-						</TableWrapper>
-					))}
-				</Table>
+				<Header>
+					<IdCell>
+						<HeaderText>ID</HeaderText>
+					</IdCell>
+
+					<NameCell>
+						<HeaderText>Name</HeaderText>
+					</NameCell>
+
+					<QuantityCell>
+						<HeaderText>Estoque</HeaderText>
+					</QuantityCell>
+
+					<QuantityCell>
+						<HeaderText>Valor</HeaderText>
+					</QuantityCell>
+
+					<QuantityCell>
+						<HeaderText>Total</HeaderText>
+					</QuantityCell>
+				</Header>
+
+				{data.map((product) => (
+					<DataRow key={product.id} onPress={() => onProductPress(product)}>
+						<IdCell>
+							<Text>{product.id}</Text>
+						</IdCell>
+
+						<NameCell>
+							<Text>{product.name}</Text>
+						</NameCell>
+
+						<QuantityCell>
+							<Text>{product.stock}</Text>
+						</QuantityCell>
+
+						<QuantityCell>
+							<Text>{product.value}</Text>
+						</QuantityCell>
+
+						<QuantityCell>
+							<Text>{product.total}</Text>
+						</QuantityCell>
+					</DataRow>
+				))}
 			</Container>
 		</ScrollView>
 	);
 };
-
-const styles = StyleSheet.create({
-	container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-	// head: { height: 40, backgroundColor: '#808B97' },
-	text: { margin: 6, color: 'red' },
-	row: { flexDirection: 'row', backgroundColor: '#FFF1C1' },
-	btn: { width: 58, height: 18, backgroundColor: '#78B7BB', borderRadius: 2 },
-	btnText: { textAlign: 'center', color: '#fff' },
-});
