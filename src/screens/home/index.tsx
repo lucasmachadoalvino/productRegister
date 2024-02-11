@@ -8,7 +8,7 @@ import FindSvg from '../../assets/find.svg';
 import { useNavigation } from '@react-navigation/native';
 import { debounce } from 'lodash';
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-import { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components/native';
 import { Button } from '../../components/Button';
 import { ProductTable } from '../../components/ProductTable';
 import {

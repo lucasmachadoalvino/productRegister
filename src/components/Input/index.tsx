@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components/native';
 import { Text } from '../Text';
 import { InputProps } from './interfaces';
 import { Container, Content, IconContent, RnInput } from './styles';
@@ -25,6 +25,7 @@ export const Input = ({
 				<RnInput placeholderTextColor={theme.colors.text} {...rest} />
 				{rightIcon && (
 					<IconContent
+						testID="rightIcon"
 						onPress={rightIconOnPress}
 						hitSlop={{ bottom: 20, left: 20, right: 20, top: 20 }}
 					>

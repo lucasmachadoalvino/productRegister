@@ -12,7 +12,7 @@ import { useFormat } from '../../utils/useFormat';
 import { useValidade } from '../../utils/useValidade';
 import { Container, Content, InputContent } from './styles';
 
-import { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components/native';
 import EyeClose from '../../assets/eye-close.svg';
 import EyeOpen from '../../assets/eye-open.svg';
 

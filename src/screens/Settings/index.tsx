@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { Switch, TouchableOpacity } from 'react-native';
-import { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components/native';
 import LeftArrow from '../../assets/left-arrow.svg';
 import { Text } from '../../components/Text';
 import { useThemeContext } from '../../theming/Theme';
