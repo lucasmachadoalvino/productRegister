@@ -137,7 +137,11 @@ export const RegisterScreen = () => {
 					}}
 					marginBottom="extraLarge"
 					rightIcon={
-						!showPassword ? <EyeClose width={24} height={24} /> : <EyeOpen width={24} height={24} />
+						!showPassword ? (
+							<EyeClose width={24} height={24} testID="EyeCloseRegister" />
+						) : (
+							<EyeOpen width={24} height={24} testID="EyeOpenRegister" />
+						)
 					}
 					rightIconOnPress={() => setShowPassword(!showPassword)}
 				/>

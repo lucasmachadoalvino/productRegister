@@ -46,21 +46,11 @@ export const useUserAlert = () => {
 		]);
 	};
 
-	const productNameEmptyAlert = () => {
-		return Alert.alert('Atenção', 'Nome do produto não informado', [
-			{
-				text: 'entendi',
-				style: 'cancel',
-			},
-		]);
-	};
-
 	return {
 		cpfEmptyAlert,
 		cpfInvalidAlert,
 		passwordEmptyAlert,
 		passwordInvalidAlert,
 		loginInvalidAlert,
-		productNameEmptyAlert,
 	};
 };

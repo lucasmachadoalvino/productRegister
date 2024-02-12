@@ -1,8 +1,11 @@
 import React from 'react';
 import { ProductTable } from '..';
+import * as orderProducts from '../../../store/features/products/produtSlice';
 import * as StoreHook from '../../../store/hooks';
 import { fireEvent, render } from '../../../utils/test-utils';
 import { ProductTableProps } from '../interfaces';
+
+const orderProductSpyon = jest.spyOn(orderProducts, 'orderProducts');
 
 export const defaultProductTableProps: ProductTableProps = {
 	onProductPress: jest.fn(),
@@ -91,7 +94,7 @@ describe('ProductTable', () => {
 		});
 	});
 
-	describe('when the component is pressed', () => {
+	describe('when the data line component is pressed', () => {
 		it('calls the onProductPress function', () => {
 			const { getByText } = renderProductTable();
 			const Id = getByText('1');
@@ -99,6 +102,53 @@ describe('ProductTable', () => {
 			fireEvent.press(Id);
 
 			expect(defaultProductTableProps.onProductPress).toHaveBeenCalled();
+		});
+	});
+
+	describe('when the header components is pressed', () => {
+		it('calls the order by id function', () => {
+			const { getByText } = renderProductTable();
+			const Id = getByText('ID');
+
+			fireEvent.press(Id);
+
+			expect(orderProductSpyon).toHaveBeenCalledWith('id');
+		});
+
+		it('calls the order by name function', () => {
+			const { getByText } = renderProductTable();
+			const Name = getByText('Name');
+
+			fireEvent.press(Name);
+
+			expect(orderProductSpyon).toHaveBeenCalledWith('name');
+		});
+
+		it('calls the order by stock function', () => {
+			const { getByText } = renderProductTable();
+			const Quantity = getByText('Estoque');
+
+			fireEvent.press(Quantity);
+
+			expect(orderProductSpyon).toHaveBeenCalledWith('stock');
+		});
+
+		it('calls the order by value function', () => {
+			const { getByText } = renderProductTable();
+			const Value = getByText('Valor');
+
+			fireEvent.press(Value);
+
+			expect(orderProductSpyon).toHaveBeenCalledWith('value');
+		});
+
+		it('calls the order by total function', () => {
+			const { getByText } = renderProductTable();
+			const Total = getByText('Total');
+
+			fireEvent.press(Total);
+
+			expect(orderProductSpyon).toHaveBeenCalledWith('total');
 		});
 	});
 });

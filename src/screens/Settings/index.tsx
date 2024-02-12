@@ -16,7 +16,13 @@ export const SettingsScreen = () => {
 		<Container>
 			<Header>
 				<TouchableOpacity onPress={navigation.goBack}>
-					<LeftArrow height={24} width={24} stroke={theme.colors.text} fill={theme.colors.text} />
+					<LeftArrow
+						height={24}
+						width={24}
+						stroke={theme.colors.text}
+						fill={theme.colors.text}
+						testID="SettingsBackIcon"
+					/>
 				</TouchableOpacity>
 				<TitleContainer>
 					<Text fontSize="large" fontWeight="bold">
@@ -31,6 +37,7 @@ export const SettingsScreen = () => {
 						trackColor={{ false: theme.colors.toggle, true: theme.colors.toggleActive }}
 						onValueChange={toggleTheme}
 						value={themeApp === 'dark'}
+						testID="SettingsSwitch"
 					/>
 					<Text fontSize="medium" fontWeight="medium" marginLeft="default">
 						Modo escuro
