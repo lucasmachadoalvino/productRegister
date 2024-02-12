@@ -109,6 +109,7 @@ export const HomeScreen = () => {
 	};
 
 	const handleProductPress = (product: Product) => {
+		console.log('🚀 ~ handleProductPress ~ product:', product);
 		setProductName(product.name);
 		setProductStock(product.stock.toString());
 		setProductValue(product.value.toString());

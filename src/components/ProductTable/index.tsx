@@ -1,14 +1,25 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-// import { addProduct } from '../../store/features/products/produtSlice';
+import { orderProducts } from '../../store/features/products/produtSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { Text } from '../Text';
 import { ProductTableProps } from './interfaces';
-import { Container, DataRow, Header, HeaderText, IdCell, NameCell, QuantityCell } from './styles';
+import {
+	Container,
+	DataRow,
+	Header,
+	HeaderText,
+	IdCell,
+	IdData,
+	NameCell,
+	NameData,
+	QuantityCell,
+	QuantityData,
+} from './styles';
 
 export const ProductTable = ({ onProductPress }: ProductTableProps) => {
 	const dispatch = useAppDispatch();
-	const products = useAppSelector((state) => state.product.list);
+	const products = useAppSelector((state) => state.product.products);
 	const filteredProducts = useAppSelector((state) => state.product.filteredProducts);
 
 	const data = filteredProducts.length > 0 ? filteredProducts : products;
@@ -17,48 +28,48 @@ export const ProductTable = ({ onProductPress }: ProductTableProps) => {
 		<ScrollView horizontal showsHorizontalScrollIndicator={false}>
 			<Container>
 				<Header>
-					<IdCell>
+					<IdCell onPress={() => dispatch(orderProducts('id'))}>
 						<HeaderText>ID</HeaderText>
 					</IdCell>
 
-					<NameCell>
+					<NameCell onPress={() => dispatch(orderProducts('name'))}>
 						<HeaderText>Name</HeaderText>
 					</NameCell>
 
-					<QuantityCell>
+					<QuantityCell onPress={() => dispatch(orderProducts('stock'))}>
 						<HeaderText>Estoque</HeaderText>
 					</QuantityCell>
 
-					<QuantityCell>
+					<QuantityCell onPress={() => dispatch(orderProducts('value'))}>
 						<HeaderText>Valor</HeaderText>
 					</QuantityCell>
 
-					<QuantityCell>
+					<QuantityCell onPress={() => dispatch(orderProducts('total'))}>
 						<HeaderText>Total</HeaderText>
 					</QuantityCell>
 				</Header>
 
 				{data.map((product) => (
 					<DataRow key={product.id} onPress={() => onProductPress(product)}>
-						<IdCell>
+						<IdData>
 							<Text>{product.id}</Text>
-						</IdCell>
+						</IdData>
 
-						<NameCell>
+						<NameData>
 							<Text>{product.name}</Text>
-						</NameCell>
+						</NameData>
 
-						<QuantityCell>
+						<QuantityData>
 							<Text>{product.stock}</Text>
-						</QuantityCell>
+						</QuantityData>
 
-						<QuantityCell>
+						<QuantityData>
 							<Text>{product.value}</Text>
-						</QuantityCell>
+						</QuantityData>
 
-						<QuantityCell>
+						<QuantityData>
 							<Text>{product.total}</Text>
-						</QuantityCell>
+						</QuantityData>
 					</DataRow>
 				))}
 			</Container>

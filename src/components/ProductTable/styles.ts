@@ -16,7 +16,12 @@ export const DataRow = styled.TouchableOpacity`
 	flex-direction: row;
 `;
 
-const DefaultCell = styled.View`
+const DefaultCell = styled.TouchableOpacity`
+	padding: ${({ theme }) => theme.space.default}px;
+	border: solid 1px ${({ theme }) => theme.colors.text};
+`;
+
+const DefaultData = styled.View`
 	padding: ${({ theme }) => theme.space.default}px;
 	border: solid 1px ${({ theme }) => theme.colors.text};
 `;
@@ -32,3 +37,15 @@ export const NameCell = styled(DefaultCell)`
 export const QuantityCell = styled(DefaultCell)`
 	width: 100px;
 `;
+
+export const IdData = styled(DefaultData)`
+	width: 50px;
+`;
+
+export const NameData = styled(DefaultData)`
+	width: 300px;
+`;
+
+export const QuantityData = styled(DefaultData)`
+	width: 100px;
+`

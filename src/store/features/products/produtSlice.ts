@@ -12,14 +12,14 @@ export interface Product {
 }
 
 interface ProductsState {
-	list: Product[];
+	products: Product[];
 	filteredProducts: Product[];
 	idCounter: number;
 	deletedIds: number[];
 }
 
 const initialState: ProductsState = {
-	list: [],
+	products: [],
 	idCounter: 1,
 	deletedIds: [],
 	filteredProducts: [],
@@ -31,34 +31,47 @@ const productsSlice = createSlice({
 	reducers: {
 		addProduct: (state, action: PayloadAction<Omit<Product, 'id'>>) => {
 			const id = state.deletedIds.length > 0 ? state.deletedIds.shift() : state.idCounter++;
-			console.log('🚀 ~ id:', id);
-			console.log('🚀 ~ state.deletedIds:', state.deletedIds);
 
 			if (id) {
-				state.list.push({ id, ...action.payload });
+				state.products.push({ id, ...action.payload });
 			}
 		},
 		removeProduct: (state, action: PayloadAction<{ productId: string }>) => {
 			const id = Number(action.payload.productId);
 			state.deletedIds.push(Number(id));
 			state.deletedIds.sort((a, b) => a - b);
-			state.list = state.list.filter((product) => product.id !== id);
+			state.products = state.products.filter((product) => product.id !== id);
 		},
 		updateProduct: (state, action: PayloadAction<Product>) => {
 			const { id, ...rest } = action.payload;
-			const index = state.list.findIndex((product) => product.id === id);
+			const index = state.products.findIndex((product) => product.id === id);
 
 			if (index !== -1) {
-				state.list[index] = { ...state.list[index], ...rest };
+				state.products[index] = { ...state.products[index], ...rest };
 			}
 		},
 		findProducts: (state, action: PayloadAction<{ name: string }>) => {
-			console.log('🚀 ~ name:', action.payload.name);
-			const products = state.list.filter((product) =>
+			const products = state.products.filter((product) =>
 				product.name.toLocaleLowerCase().includes(action.payload.name.toLocaleLowerCase())
 			);
 
 			state.filteredProducts = products;
+		},
+		orderProducts: (state, action: PayloadAction<keyof Product>) => {
+			const orderBy = action.payload;
+
+			const comparator = (a: Product, b: Product) => {
+				if (a[orderBy] < b[orderBy]) {
+					return -1;
+				}
+				if (a[orderBy] > b[orderBy]) {
+					return 1;
+				}
+				return 0;
+			};
+
+			state.products.sort(comparator);
+			state.filteredProducts.sort(comparator);
 		},
 	},
 });
@@ -68,6 +81,7 @@ const persistConfig = {
 	storage: AsyncStorage,
 };
 
-export const { addProduct, updateProduct, removeProduct, findProducts } = productsSlice.actions;
+export const { addProduct, updateProduct, removeProduct, findProducts, orderProducts } =
+	productsSlice.actions;
 
 export const productSliceReducer = persistReducer(persistConfig, productsSlice.reducer);
