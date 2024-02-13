@@ -25,7 +25,7 @@ export const ProductTable = ({ onProductPress }: ProductTableProps) => {
 	const data = filteredProducts.length > 0 ? filteredProducts : products;
 
 	return (
-		<ScrollView horizontal showsHorizontalScrollIndicator={false}>
+		<ScrollView horizontal showsHorizontalScrollIndicator={false} testID="ProductTable">
 			<Container>
 				<Header>
 					<IdCell onPress={() => dispatch(orderProducts('id'))}>

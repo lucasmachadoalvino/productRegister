@@ -1,7 +1,10 @@
 export const useValidade = () => {
 	const validateCpf = (cpf: string) => {
 		const cpfNumbersOnly = cpf.replace(/[^\d]+/g, '');
-		if (cpfNumbersOnly.length !== 11 || !!cpfNumbersOnly.match(/(\d)\1{10}/)) return false;
+
+		if (cpfNumbersOnly.length !== 11 || !!cpfNumbersOnly.match(/(\d)\1{10}/)) {
+			return false;
+		}
 
 		const cpfArray = cpfNumbersOnly.split('').map((number) => +number);
 

@@ -92,7 +92,7 @@ export const RegisterScreen = () => {
 					navigation.reset({
 						index: 0,
 						routes: [{ name: 'SignIn' }],
-					}),
+					} as never),
 				style: 'cancel',
 			},
 		]);

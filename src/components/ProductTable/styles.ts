@@ -48,4 +48,4 @@ export const NameData = styled(DefaultData)`
 
 export const QuantityData = styled(DefaultData)`
 	width: 100px;
-`
+`;

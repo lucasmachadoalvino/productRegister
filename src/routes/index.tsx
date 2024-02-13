@@ -10,14 +10,7 @@ import { SettingsScreen } from '../screens/Settings';
 import { SignInScreen } from '../screens/SignIn';
 import { Container } from './styles';
 
-export type StackParamList = {
-	SignIn: undefined;
-	Register: undefined;
-	Home: undefined;
-	Settings: undefined;
-};
-
-const Stack = createNativeStackNavigator<StackParamList>();
+const Stack = createNativeStackNavigator();
 
 export function Routes() {
 	const { cpf, isLoadingUser } = useUser();
@@ -34,7 +27,7 @@ export function Routes() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator
-				initialRouteName={!!cpf ? 'SignIn' : 'Register'}
+				initialRouteName={cpf ? 'SignIn' : 'Register'}
 				screenOptions={{ headerShown: false }}
 			>
 				<Stack.Screen name="SignIn" component={SignInScreen} />

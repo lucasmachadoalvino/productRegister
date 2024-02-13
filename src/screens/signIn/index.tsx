@@ -99,11 +99,24 @@ export const SignInScreen = () => {
 		if (!isValidLogin) {
 			return loginInvalidAlert();
 		}
+
 		navigation.reset({
 			index: 0,
-			routes: [{ name: 'Home' }],
+			routes: [{ name: 'Home' } as never],
 		});
-	}, [cpf, password, validateCpf, validadePassword]);
+	}, [
+		cpf,
+		password,
+		validadeLogin,
+		navigation,
+		cpfEmptyAlert,
+		cpfInvalidAlert,
+		passwordEmptyAlert,
+		passwordInvalidAlert,
+		loginInvalidAlert,
+		validateCpf,
+		validadePassword,
+	]);
 
 	return (
 		<Container>
@@ -151,6 +164,7 @@ export const SignInScreen = () => {
 									height={24}
 									stroke={theme.colors.text}
 									fill={theme.colors.text}
+									testID="EyeCloseSignIn"
 								/>
 							) : (
 								<EyeOpen
@@ -158,6 +172,7 @@ export const SignInScreen = () => {
 									height={24}
 									stroke={theme.colors.text}
 									fill={theme.colors.text}
+									testID="EyeOpenSignIn"
 								/>
 							)
 						}

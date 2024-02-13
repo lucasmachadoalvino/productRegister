@@ -70,7 +70,7 @@ export const HomeScreen = () => {
 		clearProductFields();
 	}, [dispatch, productId]);
 
-	const dispatchSaveProduct = useCallback(() => {
+	const dispatchAddProduct = useCallback(() => {
 		dispatch(
 			addProduct({
 				name: productName,
@@ -92,7 +92,7 @@ export const HomeScreen = () => {
 			return productValueEmptyAlert();
 		}
 
-		if (!!productId) {
+		if (productId) {
 			if (!productStock) {
 				dispatchRemoveProduct();
 				return clearProductFields();
@@ -105,11 +105,10 @@ export const HomeScreen = () => {
 			return productQuantityEmptyAlert();
 		}
 
-		return dispatchSaveProduct();
+		return dispatchAddProduct();
 	};
 
 	const handleProductPress = (product: Product) => {
-		console.log('🚀 ~ handleProductPress ~ product:', product);
 		setProductName(product.name);
 		setProductStock(product.stock.toString());
 		setProductValue(product.value.toString());
@@ -129,13 +128,14 @@ export const HomeScreen = () => {
 					<Header>
 						<ConfigButton
 							hitSlop={{ bottom: 20, left: 20, right: 20, top: 20 }}
-							onPress={() => navigation.navigate('Settings')}
+							onPress={() => navigation.navigate('Settings' as never)}
 						>
 							<ConfigSvg
 								height={24}
 								width={24}
 								stroke={theme.colors.text}
 								fill={theme.colors.text}
+								testID="ConfigButton"
 							/>
 						</ConfigButton>
 
@@ -151,6 +151,7 @@ export const HomeScreen = () => {
 										width={24}
 										stroke={theme.colors.text}
 										fill={theme.colors.text}
+										testID="SearchProductIcon"
 									/>
 								}
 								rightIconOnPress={() => {
@@ -197,6 +198,7 @@ export const HomeScreen = () => {
 							marginBottom="extraLarge"
 							value={productTotal}
 							onChangeText={setProductTotal}
+							testID="ProductTotalInput"
 						/>
 
 						<Button title="Salvar" onPress={handleSaveProduct} marginBottom="extraLarge" />

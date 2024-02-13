@@ -33,12 +33,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 		setIsLoadingUser(false);
 	};
 
-	const registerUser = async (cpf: string, password: string) => {
-		await AsyncStorage.setItem('@cpf', cpf);
-		await AsyncStorage.setItem('@password', password);
+	const registerUser = async (cpfValue: string, passwordValue: string) => {
+		await AsyncStorage.setItem('@cpf', cpfValue);
+		await AsyncStorage.setItem('@password', passwordValue);
 
-		setCpf(cpf);
-		setPassword(password);
+		setCpf(cpfValue);
+		setPassword(passwordValue);
 	};
 
 	const validadeLogin = (userCpf: string, userPassword: string) => {
